@@ -23,6 +23,7 @@
 
 
 float convertir(float montant, int devise);
+void afficher_reel (float f);
 
 void app_main(void)
 {
@@ -44,10 +45,16 @@ void app_main(void)
    
     float result = convertir(500,1);
     printf("hellow world!");
-    printf("%f\n", result);
+    afficher_reel(result);
+    printf("\n");
 
 }
-
+void afficher_reel (float f)
+{
+    int entier = (int)(f);
+    int decimal = (int)((f-entier) * 10000);
+    printf("%d.%d",entier,decimal);
+}
 float convertir(float montant, int devise)
 {
     float yen = 800;
