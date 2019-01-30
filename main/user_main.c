@@ -12,6 +12,8 @@
 
 #include "driver/gpio.h"
 
+
+
 /******************************************************************************
  * FunctionName : app_main
  * Description  : entry of user application, init user function here
@@ -20,7 +22,7 @@
 *******************************************************************************/
 
 
-
+float convertir(float montant, int devise);
 
 void app_main(void)
 {
@@ -33,13 +35,37 @@ void app_main(void)
     gpio_config(&c);
 
     //printf("SDK version:%s\n", esp_get_idf_version());
-    printf("hello world!\n");
+    //printf("hello world!\n");
 
 
-    int n = gpio_get_level(GPIO_NUM_0);
-    printf(n,"\n");
-    gpio_set_level(4,1);
+    //int n = gpio_get_level(GPIO_NUM_0);
+    //printf(n,"\n");
+    //gpio_set_level(4,1);
    
+    float result = convertir(500,1);
+    printf("hellow world!");
+    printf("%f\n", result);
 
 }
 
+float convertir(float montant, int devise)
+{
+    float yen = 800;
+    float dollars = 1.14f;
+    float livres = 0.87f;
+
+float result = 0;
+
+    if ( devise == 1 )
+    {
+        result  = montant * yen ;       
+    } else if ( devise == 2)
+    {
+        result = montant * dollars;
+    } else if (devise == 3)
+    {
+        result = montant * livres;
+    }
+    return result;
+
+}
