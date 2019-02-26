@@ -44,6 +44,7 @@ void app_main(void)
     //gpio_set_level(4,1);
    
     float result = convertir(500,1);
+    printf("zgeg");
     printf("hellow world!");
     afficher_reel(result);
     printf("\n");
