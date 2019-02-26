@@ -12,6 +12,10 @@
 
 #include "driver/gpio.h"
 
+#include "freertos/FreeRTOS.h"
+
+#include "freertos/task.h"
+
 
 
 /******************************************************************************
@@ -24,10 +28,13 @@
 
 float convertir(float montant, int devise);
 void afficher_reel (float f);
+void test();
 
+int new_devise =0;
+volatile int n = 0;
 void app_main(void)
 {
-    
+    //LED 1
     gpio_config_t c ;
     c.mode=GPIO_MODE_OUTPUT;
     c.pin_bit_mask = GPIO_Pin_4;
@@ -35,10 +42,9 @@ void app_main(void)
     c.pull_down_en = c.pull_up_en = 0;
     gpio_config(&c);
 
-    //printf("SDK version:%s\n", esp_get_idf_version());
-    //printf("hello world!\n");
 
 
+<<<<<<< HEAD
     //int n = gpio_get_level(GPIO_NUM_0);
     //printf(n,"\n");
     //gpio_set_level(4,1);
@@ -47,9 +53,58 @@ void app_main(void)
     printf("zgeg");
     printf("hellow world!");
     afficher_reel(result);
+=======
+
+     gpio_config_t button ;
+    button.mode=GPIO_MODE_INPUT;
+    button.pin_bit_mask = GPIO_Pin_14|GPIO_Pin_12|GPIO_Pin_13;
+    button.intr_type = GPIO_INTR_NEGEDGE;
+    button.pull_down_en = button.pull_up_en = 0;
+    gpio_config(&button);
+
+    /* 
+
+    
+    gpio_set_level(14,0);
+
+
+    int n = gpio_get_level(GPIO_NUM_14);
+    printf("%d",n);
+>>>>>>> 243a5b93020c19cdd261a7d216197ca8172542ad
     printf("\n");
+ 
+    */
+
+
+    gpio_install_isr_service(0) ;
+    gpio_isr_handler_add(13, test, 1);
+    //gpio_isr_handler_remove(13) ;
+   
+    //float result = convertir(100,1);
+
+    
+    while (new_devise == 1){
+        convertir(500,1);
+    }
 
 }
+
+
+void test(devise){
+
+new_devise = devise;
+
+
+}
+
+
+
+
+
+
+
+
+
 void afficher_reel (float f)
 {
     int entier = (int)(f);
@@ -62,18 +117,20 @@ float convertir(float montant, int devise)
     float dollars = 1.14f;
     float livres = 0.87f;
 
-float result = 0;
+    float result = 0;
 
     if ( devise == 1 )
     {
-        result  = montant * yen ;       
+        result  = montant * dollars ;       
     } else if ( devise == 2)
     {
-        result = montant * dollars;
+        result = montant * yen;
     } else if (devise == 3)
     {
         result = montant * livres;
     }
-    return result;
-
+    printf("hellow world!");
+    afficher_reel(result);
+    printf("\n");
+return result;
 }
